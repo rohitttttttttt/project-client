@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState , useContext } from 'react'
+import { userContext } from '../context/userContext'
+
+// const {login} = useContext(userContext)
 
 function SignUp() {
+    const {login} = useContext(userContext)
     let [userName , setuserName]= useState("")
     let [password , setPassword] = useState("")
     let[fullName, setFullName ]= useState("")
@@ -29,26 +33,35 @@ function SignUp() {
                 body:JSON.stringify(formData),
                 headers:{
                      "Content-Type": "application/json"
-                }
+                },
+                credentials:"include"
 
             })
-            const data = await res.json();
-            console.log(data)
-            alert("ha ha hA HA ")
-            setuserName("");
-            setPassword("");
-            setFullName("");
-            setState("");
-            setCity("");
-            setPincode("");
-            setPhone("");
-            setEmail("");
+            if(res.ok){
+                const data = await res.json();
+                login(data.safeUser  , data. accessToken)
+
+                console.log(data)
+                //alert("ha ha hA HA ")
+                setuserName("");
+                setPassword("");
+                setFullName("");
+                setState("");
+                setCity("");
+                setPincode("");
+                setPhone("");
+                setEmail("");
+                alert("sucessfully logged in  ")
+            }else{
+                alert("something went wrong please try again later ")
+            }
+            
 
         } catch (error) {
             console.log("regiter error while fetching: " + error)
         } 
        
-
+ 
     }
 
    

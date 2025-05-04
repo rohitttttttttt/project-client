@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState , useContext} from 'react'
+import { userContext } from '../context/userContext'
+
 
 function Login() {
+   const {login}=useContext(userContext)
     const placeholderStyle ={
         border: "none",
         borderBottom: "2px solid #ccc",
@@ -32,12 +35,15 @@ function Login() {
                 }
 
             })
-            const data = await res.json();
+            if(res.ok){
+              const data = await res.json();
+              login(data.safeuser , data.accessToken)
             console.log(data)
             alert("ha ha hA HA ")
             setuserName("");
             setPassword("");
 
+            }
         } catch (error) {
             console.log("login error while fetching: " + error)
         } 
