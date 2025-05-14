@@ -1,7 +1,7 @@
 import React,{useState}from 'react'
 import axios from 'axios'
 
-function UploadProduct() {
+function UploadProduct(Product) {
   let [title , setTitle]= useState("")
   let[description, setDescription ]= useState("")
   let[type , setType]= useState("")

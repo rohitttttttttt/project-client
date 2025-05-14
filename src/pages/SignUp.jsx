@@ -1,9 +1,11 @@
 import React, { useEffect, useState , useContext } from 'react'
 import { userContext } from '../context/userContext'
+import { useNavigate } from 'react-router-dom'
 
 // const {login} = useContext(userContext)
 
 function SignUp() {
+    const navigate = useNavigate();
     const {login} = useContext(userContext)
     let [userName , setuserName]= useState("")
     let [password , setPassword] = useState("")
@@ -51,7 +53,7 @@ function SignUp() {
                 setPincode("");
                 setPhone("");
                 setEmail("");
-                alert("sucessfully logged in  ")
+               navigate("/home")
             }else{
                 alert("something went wrong please try again later ")
             }

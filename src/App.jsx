@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import Register from './pages/register'
 import Profile from './pages/Profile'
 import UploadProduct from './components/UploadProduct'
+import SearchPage from './pages/SearchPage'
 function App() {
  
 
@@ -14,12 +15,13 @@ function App() {
     <>
     <Navbar/>
      <Routes>
-     <Route path="/" element={<Home/>}/>
-      <Route path="/register" element={<Register/>}/>
+     <Route path="/home" element={<Home/>}/>
+      <Route path="/" element={<Register/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/signUp" element={<SignUp/>}/>
       <Route path="/profile" element={<Profile/>}/>
       <Route path="/uploadProduct" element={<UploadProduct/>}/>
+      <Route path="/Search" element={<SearchPage/>}/>
     </Routes>
     </>
    

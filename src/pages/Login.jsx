@@ -1,8 +1,10 @@
 import React, { useState , useContext} from 'react'
 import { userContext } from '../context/userContext'
+import { useNavigate } from 'react-router-dom'
 
 
 function Login() {
+  const navigate = useNavigate()
    const {login}=useContext(userContext)
     const placeholderStyle ={
         border: "none",
@@ -39,9 +41,10 @@ function Login() {
               const data = await res.json();
               login(data.safeuser , data.accessToken)
             console.log(data)
-            alert("ha ha hA HA ")
+           
             setuserName("");
             setPassword("");
+            navigate("/home")
 
             }
         } catch (error) {
