@@ -1,15 +1,21 @@
 import React, { useState } from 'react'
 import { Link , useNavigate } from 'react-router-dom'
+import { useContext } from 'react';
+import { userContext } from '../context/userContext';
 
 function Navbar() {
+  const { searchInput , handleCartClick , cartOpen} = useContext(userContext)
   let[title , setTitle] = useState("");
   const navigate = useNavigate();
   const handleSearchCLick =()=>{
     if(title.length >0){
       navigate("/search")
+      searchInput(title)
     }
   }
 
+  
+  
   return (
     <div style={{background:"#d8e9f0"}}>
       <nav style={{display:"flex" , height:"10vh",}}>
@@ -20,14 +26,17 @@ function Navbar() {
             <li style={{ marginLeft: "3vw" }}>
                 <Link to="/home">Home</Link>
             </li>
-            <li style={{ marginLeft: "5vw" }}>
-                <Link to="/about">About</Link>
+            <li style={{ marginLeft: "5vw"  , cursor:"pointer"}} onClick={handleCartClick}>
+               Cart
             </li>
             <li style={{ marginLeft: "5vw" }}>
                 <Link to="/profile">Profile</Link>
             </li>
             <li style={{ marginLeft: "5vw" }}>
                 <Link to="/">Register</Link>
+            </li>
+            <li style={{ marginLeft: "5vw" }}>
+                <Link to="/chat">chat</Link>
             </li>
         </ul>
 

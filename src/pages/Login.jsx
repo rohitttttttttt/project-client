@@ -40,7 +40,7 @@ function Login() {
             if(res.ok){
               const data = await res.json();
               login(data.safeuser , data.accessToken)
-            console.log(data)
+            console.log(data.safeuser)
            
             setuserName("");
             setPassword("");

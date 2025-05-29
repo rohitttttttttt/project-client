@@ -41,7 +41,7 @@ function SignUp() {
             })
             if(res.ok){
                 const data = await res.json();
-                login(data.safeUser  , data. accessToken)
+                login(data.safeUser  , data.accessToken)
 
                 console.log(data)
                 //alert("ha ha hA HA ")

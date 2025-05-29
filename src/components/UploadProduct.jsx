@@ -1,7 +1,9 @@
 import React,{useState}from 'react'
 import axios from 'axios'
-
+import { useContext } from 'react'
+import { userContext } from '../context/userContext'
 function UploadProduct(Product) {
+  const{token}= useContext(userContext)
   let [title , setTitle]= useState("")
   let[description, setDescription ]= useState("")
   let[type , setType]= useState("")
@@ -37,7 +39,7 @@ function UploadProduct(Product) {
         withCredentials: true,
         headers:{
           "Content-Type": "multipart/form-data",
-          Authorization :`Bearer ${localStorage.getItem("token")}`
+          Authorization :token
         }
       })
       if(res.status === 200){

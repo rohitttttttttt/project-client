@@ -2,7 +2,7 @@ import React,{useContext} from 'react'
 import { userContext } from '../context/userContext'
 
 function UserInfoCard() {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const {user} = useContext(userContext)
 
   return (
     <div style={{display:"flex" , flexDirection:"row" , width:"96vw" , color:"whitesmoke" , marginLeft:"2vw"}}>

@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
-import { userContext } from '../context/userContext'
+import React from 'react'
+
 import UserInfoCard from '../components/UserInfoCard'
 
 function Profile() {
-    const {user}= useContext(userContext)
+    
   return (
     <div style={{background:"#29252c",
         display:"flex",
