@@ -1,0 +1,298 @@
+/* ═══════════════════════════════════════════════════
+   OrbitFarms — Design System & Global Styles
+   ═══════════════════════════════════════════════════ */
+
+/* 🎨 CSS Custom Properties */
+:root {
+  /* ── Brand Colors ── */
+  --primary: #81E451;
+  --primary-dark: #6DBE45;
+  --primary-light: #CDEACA;
+  --primary-bg: #F0F9EC;
+
+  /* ── Text Colors ── */
+  --text-dark: #1A1A1A;
+  --text-body: #252C32;
+  --text-muted: #626262;
+  --text-light: rgba(23, 22, 22, 0.66);
+
+  /* ── Background Colors ── */
+  --bg-white: #FFFFFF;
+  --bg-light: #F8FBF6;
+  --bg-card: #F5F5F5;
+  --bg-gray: #D9D9D9;
+
+  /* ── UI Colors ── */
+  --border: #DDE2E4;
+  --border-light: #EEEEEE;
+  --icon-muted: #B0BABF;
+  --star: #DFB300;
+  --star-empty: #626262;
+  --badge-red: #F76659;
+  --badge-text: #FFEFEB;
+
+  /* ── Typography ── */
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-accent: 'Plus Jakarta Sans', sans-serif;
+
+  /* ── Spacing ── */
+  --container-max: 1400px;
+  --container-padding: 24px;
+  --section-gap: 80px;
+  --card-radius: 8px;
+  --btn-radius: 6px;
+
+  /* ── Transitions ── */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Global Reset ── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-white);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.3;
+}
+
+h1 { font-size: 64px; font-weight: 600; }
+h2 { font-size: 48px; font-weight: 500; }
+h3 { font-size: 24px; font-weight: 700; }
+h4 { font-size: 18px; font-weight: 600; }
+h5 { font-size: 14px; font-weight: 600; }
+h6 { font-size: 12px; font-weight: 600; }
+
+p {
+  font-family: var(--font-body);
+  color: var(--text-body);
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-dark);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--primary);
+}
+
+/* ── Buttons ── */
+button {
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all var(--transition-normal);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--bg-white);
+  padding: 10px 24px;
+  border-radius: var(--btn-radius);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(129, 228, 81, 0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-dark);
+  padding: 10px 24px;
+  border: 1px solid var(--primary);
+  border-radius: var(--btn-radius);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.btn-outline:hover {
+  background: var(--primary-bg);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-body);
+  padding: 8px 16px;
+  border-radius: var(--btn-radius);
+  font-weight: 400;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-ghost:hover {
+  background: var(--bg-light);
+}
+
+.btn-login {
+  background: var(--bg-white);
+  color: var(--text-body);
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--btn-radius);
+  font-weight: 400;
+  font-size: 14px;
+  text-align: center;
+}
+
+.btn-login:hover {
+  background: var(--bg-light);
+  border-color: var(--primary);
+}
+
+/* ── Inputs ── */
+input, textarea, select {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-body);
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--btn-radius);
+  padding: 8px 16px;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(129, 228, 81, 0.15);
+}
+
+input::placeholder {
+  color: var(--icon-muted);
+}
+
+/* ── Container ── */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+/* ── Utility Classes ── */
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-primary { color: var(--primary); }
+.text-primary-dark { color: var(--primary-dark); }
+.text-muted { color: var(--text-muted); }
+.text-dark { color: var(--text-dark); }
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 500;
+  color: var(--text-dark);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.section-title .highlight {
+  color: var(--primary-dark);
+}
+
+/* ── Lists ── */
+ul { list-style: none; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* ── Images ── */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ── Responsive Breakpoints (used in component CSS files) ──
+   Mobile:   <= 480px
+   Tablet:   481px - 768px
+   Desktop:  769px - 1024px
+   Wide:     >= 1025px
+───────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  :root {
+    --container-padding: 16px;
+    --section-gap: 48px;
+  }
+
+  h1 { font-size: 36px; }
+  h2 { font-size: 28px; }
+  h3 { font-size: 20px; }
+
+  .section-title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --container-padding: 12px;
+    --section-gap: 32px;
+  }
+
+  h1 { font-size: 28px; }
+  h2 { font-size: 22px; }
+}

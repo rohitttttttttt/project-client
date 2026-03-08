@@ -1,90 +1,95 @@
-import React, { useState , useContext} from 'react'
-import { userContext } from '../context/userContext'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../store/authSlice';
+import authService from '../services/authService';
+import './Login.css';
 
+function Login({ embedded = false }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-function Login() {
-  const navigate = useNavigate()
-   const {login}=useContext(userContext)
-    const placeholderStyle ={
-        border: "none",
-        borderBottom: "2px solid #ccc",
-        outline: "none",
-        background: "transparent",
-        padding: "10px 5px",
-        color: "#fff",              
-        fontSize: "16px",
-        marginBottom: "20px",
-        width:"25vw"
-      }
+  const [identifier, setIdentifier] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-    let [userName , setuserName]= useState("")
-    let [password , setPassword] = useState("")
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const  formData = {
-            "userName":userName,
-            "password":password,
-            
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
-        try {
-            const res= await fetch("http://localhost:3000/user/login" , {
-                method:"POST",
-                body:JSON.stringify(formData),
-                headers:{
-                     "Content-Type": "application/json"
-                }
+    const isEmail = identifier.includes('@');
+    const payload = isEmail
+      ? { email: identifier, password }
+      : { phone: identifier, password };
 
-            })
-            if(res.ok){
-              const data = await res.json();
-              login(data.safeuser , data.accessToken)
-            console.log(data.safeuser)
-           
-            setuserName("");
-            setPassword("");
-            navigate("/home")
-
-            }
-        } catch (error) {
-            console.log("login error while fetching: " + error)
-        } 
-       
-
+    try {
+      const { data } = await authService.login(payload);
+      dispatch(loginSuccess({ user: data.user, accessToken: data.accessToken }));
+      navigate('/');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Invalid credentials. Please try again.');
+    } finally {
+      setLoading(false);
     }
-    
-  return (
-    <div style={{background:"#29252c",
-        display:"flex",
-        flexDirection:'column',
-        alignItems:"center",
-        justifyContent:"top",
-        height:"100vh"}}>
-      <div style={{border:"1px  solid  black " , 
-                    display:"flex",
-                    flexDirection:"column",
-                    alignItems:"center",
-                    justifyContent:"center",
-                    width:"50vw",
-                    height:"80vh",
-                    boxShadow:"0px 0px 10px rgba(0, 0,0,0.1)",
-                    overflow:"hidden",
-                    padding:"20px",
-                    background:"#d8e9f0",
-                    borderRadius:"10px",
-                    marginTop:"1vh"
-                    }}>
-                        <h2 style={{color:"#000000"}}>login here</h2>
-        <form action="" style={{ maxHeight: "75vh", overflowY: "auto", width: "100%" , textAlign:"center" } } onSubmit={handleSubmit}>
-            <input type="text" placeholder='username / email' style={placeholderStyle} onChange={(e)=>setuserName(e.target.value)} />
-            <input type="text" placeholder='password' style={placeholderStyle} onChange={(e)=>setPassword(e.target.value)} />
-            <br />
-            <button type='submit'>submit</button>
-        </form>
+  };
+
+  const formContent = (
+    <form className="login-form" onSubmit={handleSubmit}>
+      {!embedded && <h1 className="login-form__title">Login</h1>}
+      {!embedded && <p className="login-form__desc">Enter your credentials to access your account</p>}
+
+      {error && <div className="login-form__error">{error}</div>}
+
+      <div className="login-form__group">
+        <label className="login-form__label">Email or Phone</label>
+        <input
+          type="text"
+          className="login-form__input"
+          placeholder="your@email.com or 9876543210"
+          value={identifier}
+          onChange={(e) => setIdentifier(e.target.value)}
+          required
+        />
       </div>
+
+      <div className="login-form__group">
+        <label className="login-form__label">Password</label>
+        <input
+          type="password"
+          className="login-form__input"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </div>
+
+      <button type="submit" className="login-form__submit" disabled={loading}>
+        {loading ? 'Logging in...' : 'Login'}
+      </button>
+
+      {!embedded && (
+        <p className="login-form__switch">
+          Don't have an account?{' '}<a onClick={() => navigate('/signup')}>Sign up</a>
+        </p>
+      )}
+    </form>
+  );
+
+  if (embedded) return formContent;
+
+  return (
+    <div className="login-page">
+      <div className="login-page__left">
+        <img className="login-page__illustration" src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=500&q=80" alt="Fresh farm produce" />
+        <h2 className="login-page__tagline">Welcome back to <span>Orbit Farms</span></h2>
+        <p className="login-page__subtitle">Fresh produce from local farmers, delivered to you.</p>
+      </div>
+      <div className="login-page__right">{formContent}</div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

@@ -1,0 +1,241 @@
+/* ═══════════════════════════════════════════
+   SearchPage.css — Search Results + Inline Filters
+   ═══════════════════════════════════════════ */
+
+.search-page {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 24px var(--container-padding);
+}
+
+/* ── Header ── */
+.search-page__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 16px;
+}
+
+.search-page__title {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+}
+
+.search-page__subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* ── Inline Filter Panel (always visible) ── */
+.search-page__filters {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow-sm);
+}
+
+.search-page__filters-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 24px;
+    align-items: end;
+}
+
+.search-page__filter-group {
+    /* Grid child */
+}
+
+.search-page__filter-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.search-page__filter-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-page__filter-input {
+    flex: 1;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--btn-radius);
+    font-size: 14px;
+    max-width: 120px;
+    outline: none;
+    transition: border-color var(--transition-fast);
+}
+
+.search-page__filter-input:focus {
+    border-color: var(--primary);
+}
+
+.search-page__filter-dash {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* Rating Buttons */
+.search-page__rating-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.search-page__rating-btn {
+    padding: 7px 12px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--bg-white);
+    color: var(--text-body);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.search-page__rating-btn:hover {
+    border-color: var(--primary);
+    background: var(--primary-bg);
+}
+
+.search-page__rating-btn--active {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: var(--bg-white);
+}
+
+/* Organic Checkbox */
+.search-page__filter-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    padding-top: 20px;
+}
+
+.search-page__filter-check input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+.search-page__filter-check-label {
+    font-weight: 500;
+    color: var(--text-body);
+}
+
+/* Filter Actions */
+.search-page__filter-actions {
+    display: flex;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-light);
+    margin-top: 16px;
+}
+
+.search-page__filter-apply {
+    padding: 9px 24px;
+    border-radius: var(--btn-radius);
+    background: var(--primary);
+    color: var(--bg-white);
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.search-page__filter-apply:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(129, 228, 81, 0.3);
+}
+
+.search-page__filter-clear {
+    padding: 9px 18px;
+    border-radius: var(--btn-radius);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 14px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.search-page__filter-clear:hover {
+    border-color: var(--badge-red);
+    color: var(--badge-red);
+}
+
+/* ── Product Grid ── */
+.search-page__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+    justify-items: center;
+}
+
+/* ── Empty State ── */
+.search-page__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 80px 24px;
+    color: var(--text-muted);
+}
+
+.search-page__empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.search-page__empty-text {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.search-page__empty-hint {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .search-page__filters-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .search-page__filters-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-page__filter-input {
+        max-width: 100%;
+    }
+
+    .search-page__grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 16px;
+    }
+
+    .search-page__filter-actions {
+        flex-direction: column;
+    }
+}

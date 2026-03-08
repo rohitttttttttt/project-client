@@ -1,0 +1,85 @@
+/* ═══════════════════════════════════════════
+   Register.css — Auth Gate Page
+   ═══════════════════════════════════════════ */
+
+.register-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-light);
+    padding: 40px 24px;
+}
+
+.register-page__logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.register-page__logo-orbit {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 36px;
+    color: var(--text-dark);
+}
+
+.register-page__logo-farms {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 36px;
+    color: var(--primary-dark);
+}
+
+.register-page__card {
+    background: var(--bg-white);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    padding: 48px;
+    width: 100%;
+    max-width: 460px;
+    text-align: center;
+}
+
+.register-page__tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 32px;
+    border-bottom: 2px solid var(--border);
+}
+
+.register-page__tab {
+    flex: 1;
+    padding: 12px 0;
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.register-page__tab--active {
+    color: var(--primary-dark);
+    border-bottom-color: var(--primary);
+}
+
+.register-page__tab:hover {
+    color: var(--text-dark);
+}
+
+@media (max-width: 480px) {
+    .register-page__card {
+        padding: 32px 24px;
+    }
+
+    .register-page__logo-orbit,
+    .register-page__logo-farms {
+        font-size: 28px;
+    }
+}

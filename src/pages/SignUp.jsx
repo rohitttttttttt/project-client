@@ -1,131 +1,100 @@
-import React, { useEffect, useState , useContext } from 'react'
-import { userContext } from '../context/userContext'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../store/authSlice';
+import authService from '../services/authService';
+import './SignUp.css';
 
-// const {login} = useContext(userContext)
+function SignUp({ embedded = false }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-function SignUp() {
-    const navigate = useNavigate();
-    const {login} = useContext(userContext)
-    let [userName , setuserName]= useState("")
-    let [password , setPassword] = useState("")
-    let[fullName, setFullName ]= useState("")
-    let[state , setState]= useState("")
-    let[city, setCity ]= useState("")
-    let[pincode, setPincode ]= useState()
-    let[phone , setPhone]= useState()
-    let[email , setEmail ]= useState("")
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('user');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const  formData = {
-            "userName":userName,
-            "password":password,
-            "fullName":fullName,
-            "state":state,
-            "city":city,
-            "pincode":pincode,
-            "phone":phone,
-            "email": email,
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
-        try {
-            const res= await fetch("http://localhost:3000/user/register" , {
-                method:"POST",
-                body:JSON.stringify(formData),
-                headers:{
-                     "Content-Type": "application/json"
-                },
-                credentials:"include"
-
-            })
-            if(res.ok){
-                const data = await res.json();
-                login(data.safeUser  , data.accessToken)
-
-                console.log(data)
-                //alert("ha ha hA HA ")
-                setuserName("");
-                setPassword("");
-                setFullName("");
-                setState("");
-                setCity("");
-                setPincode("");
-                setPhone("");
-                setEmail("");
-               navigate("/home")
-            }else{
-                alert("something went wrong please try again later ")
-            }
-            
-
-        } catch (error) {
-            console.log("regiter error while fetching: " + error)
-        } 
-       
- 
+    try {
+      const { data } = await authService.signup({ fullName, email, phone, password, role });
+      dispatch(loginSuccess({ user: data.user, accessToken: data.accessToken }));
+      navigate('/');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Signup failed. Please try again.');
+    } finally {
+      setLoading(false);
     }
+  };
 
-   
-    const placeholderStyle ={
-        border: "none",
-        borderBottom: "2px solid #ccc",
-        outline: "none",
-        background: "transparent",
-        padding: "10px 5px",
-        color: "#000000",              // your input text color
-        fontSize: "16px",
-        marginBottom: "20px",
-        width:"25vw"
-      }
-    
-  return (
-    <div style={{background:"#29252c",
-        display:"flex",
-        flexDirection:'column',
-        alignItems:"center",
-        justifyContent:"top",
-        height:"100vh"}}>
-            
-        <div style={{border:"1px  solid  black " , 
-                    display:"flex",
-                    flexDirection:"column",
-                    alignItems:"center",
-                    justifyContent:"center",
-                    width:"50vw",
-                    height:"80vh",
-                    boxShadow:"0px 0px 10px rgba(0, 0,0,0.1)",
-                    overflow:"hidden",
-                    padding:"20px",
-                    background:"#d8e9f0",
-                    borderRadius:"10px",
-                    marginTop:"1vh"
-                    }}>
-                        <h2 style={{color:"#000000"}}>Register here</h2>
-        <form style={{ maxHeight: "75vh", overflowY: "auto", width: "100%" , textAlign:"center" }} onSubmit={handleSubmit}>
-        
-        <input type="text" name='userName'  placeholder='userName' style={placeholderStyle} onChange={(e)=>setuserName(e.target.value)}/>
-        <br />
-        <input type="text" name='fullName'  placeholder='fullName' style={placeholderStyle} onChange={(e)=>setFullName(e.target.value)}/>
-        <br />
-        <input type="text" name='password'  placeholder='password' style={placeholderStyle} onChange={(e)=>setPassword(e.target.value)}/>
-       <br />
-        <input type="text" name='email'  placeholder='email' style={placeholderStyle} onChange={(e)=>setEmail(e.target.value)}/>
-       <br />
-        <input type="text" name='phoneNumber'  placeholder='phoneNumber' style={placeholderStyle} onChange={(e)=>setPhone(e.target.value)}/>
-       <br />
-        <input type="text" name='state'  placeholder='state' style={placeholderStyle} onChange={(e)=>setState(e.target.value)}/>
-       <br />
-        <input type="text" name='city'  placeholder='city' style={placeholderStyle} onChange={(e)=>setCity(e.target.value)}/>
-       <br />
-        <input type="text" name='pincode'  placeholder='pinCode' style={placeholderStyle} onChange={(e)=>setPincode(e.target.value)}/>
-        <br />
-        <button style={{marginTop:"1px", marginBottom:"2px"}} type='submit'>submit</button>
-        </form>
+  const formContent = (
+    <form className="signup-form" onSubmit={handleSubmit}>
+      {!embedded && <h1 className="signup-form__title">Create Account</h1>}
+      {!embedded && <p className="signup-form__desc">Fill in your details to get started</p>}
+
+      {error && <div className="signup-form__error">{error}</div>}
+
+      <div className="signup-form__group">
+        <label className="signup-form__label">Full Name</label>
+        <input type="text" className="signup-form__input" placeholder="Your full name" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
+      </div>
+
+      <div className="signup-form__row">
+        <div className="signup-form__group">
+          <label className="signup-form__label">Email</label>
+          <input type="email" className="signup-form__input" placeholder="your@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
-      
+        <div className="signup-form__group">
+          <label className="signup-form__label">Phone</label>
+          <input type="tel" className="signup-form__input" placeholder="10-digit mobile" value={phone} onChange={(e) => setPhone(e.target.value)} />
+        </div>
+      </div>
+
+      <p className="signup-form__hint">At least one of email or phone is required</p>
+
+      <div className="signup-form__group">
+        <label className="signup-form__label">Password</label>
+        <input type="password" className="signup-form__input" placeholder="Min 6 characters" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
+      </div>
+
+      <div className="signup-form__group">
+        <label className="signup-form__label">I am a</label>
+        <select className="signup-form__input" value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="user">Buyer</option>
+          <option value="farmer">Farmer / Seller</option>
+        </select>
+      </div>
+
+      <button type="submit" className="signup-form__submit" disabled={loading}>
+        {loading ? 'Creating Account...' : 'Create Account'}
+      </button>
+
+      {!embedded && (
+        <p className="signup-form__switch">
+          Already have an account?{' '}<a onClick={() => navigate('/login')}>Login</a>
+        </p>
+      )}
+    </form>
+  );
+
+  if (embedded) return formContent;
+
+  return (
+    <div className="signup-page">
+      <div className="signup-page__left">
+        <img className="signup-page__illustration" src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=500&q=80" alt="Farm landscape" />
+        <h2 className="signup-page__tagline">Join the <span>Orbit Farms</span> community</h2>
+        <p className="signup-page__subtitle">Start buying fresh produce directly from local farmers today.</p>
+      </div>
+      <div className="signup-page__right">{formContent}</div>
     </div>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;

@@ -1,24 +1,34 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
+import { userContext } from '../context/userContext'
 
 function SearchCard({searchedProducts}) {
+  const navigate = useNavigate()
+  const { setViewProduct, addCartItem, cartItem } = useContext(userContext)
+  const productNavigate = () => {
+    setViewProduct(searchedProducts)
+    navigate("/productPage")
+  }
   return (
-    <div style={{border:"1px  solid  black " , 
+    <div style={{ 
         display:"flex",
         flexDirection:"row",
         alignItems:"center",
         justifyContent:"left",
         width:"90vw",
-        height:"30vh",
-        boxShadow:"0px 0px 10px rgba(0, 0,0,0.1)",
-        background:"#d8e9f0",
-        borderRadius:"10px",
-        marginTop:"3vh"
-        }}>
-          <div><img style={{height:"28vh", width:"25vw" , marginLeft:"3vh"}} src={searchedProducts.images} alt="" /></div>
+        height:"45vh",
+        padding:"10px",
+        background:"var(--color-bg)",
+        marginTop:"0.5vh"
+        }}
+        onClick={productNavigate}
+        >
+          <div><img style={{height:"40vh", width:"34vw" , marginLeft:"3vh"}} src={searchedProducts.images} alt="" /></div>
           <div style={{display:"flex" , flexDirection:"column",justifyContent:"top", alignItems:"top", height:"30vh" , marginLeft:"2vw"}}>
-            <h1 style={{marginBottom:"3vh"}}>{searchedProducts.title}</h1>
-            <h3>{searchedProducts.description}</h3>
-            <h2>price rs {searchedProducts.price}</h2>
+            <h2 style={{marginBottom:"3vh"}}>{searchedProducts.title}</h2>
+            <h4>{searchedProducts.description}</h4>
+            <h3>price rs {searchedProducts.price}</h3>
           </div>
       
     </div>
